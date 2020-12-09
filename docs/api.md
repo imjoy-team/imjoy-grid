@@ -57,3 +57,42 @@ class ImJoyPlugin():
 api.export(ImJoyPlugin())
 ```
 <!-- tabs:end -->
+
+
+### Configurations
+When creating a new ImJoy Grid via `api.createWindow` or `api.showDialog`, a `config` object can be passed which may contain the following config keys:
+ * `colNum`: Number, default: 20, the number of columns
+ * `rowHeight`: Number, default: 30, the height of the rows
+ * `verticalCompact`: Boolean, default: true, enable vertical compact mode
+
+If you want to change any of the config after creating the window, you can call `grid.updateConfig({...})`.
+
+When creating windows inside the ImJoy Grid container (via `grid.createWindow`, you can pass `x`, `y` to define the position, and `w`, `h` to define the height and width.
+
+You can also set `hide_title_bar` to `true` if you don't want to show the title bar.
+
+!> If you want to use predefined `x`, `y` position, you may want to set `verticalCompact` to `false`.
+
+
+
+<!-- ImJoyPlugin: {"type": "native-python", "editor_height": "400px"} -->
+```python
+from imjoy import api
+
+class ImJoyPlugin():
+    async def setup(self):
+        pass
+
+    async def run(self, ctx):
+        # create a grid container
+        grid = await api.createWindow(src="http://localhost:8080/#/app", config={"verticalCompact": False, "colNum": 5, "rowHeight": 30})
+
+        # create a window
+        viewer = await grid.createWindow(src="https://kaibu.org/#/app", w=2, x=0, y=0)
+        await viewer.view_image("https://images.proteinatlas.org/61448/1319_C10_2_blue_red_green.jpg")
+
+        # create another window
+        viewer = await grid.createWindow(src="https://imjoy.io/docs", passive=True, w=2, x=2, y=0)
+
+api.export(ImJoyPlugin())
+```

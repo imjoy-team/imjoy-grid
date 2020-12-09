@@ -14,7 +14,7 @@
     "imjoy-core": "^0.13.46",
     "minibus": "^3.1.0",
     "vue-material": "^1.0.0-beta-12",
-    "vue-grid-layout": "github:jbaysolutions/vue-grid-layout#9e13ea9",
+    "vue-grid-layout": "github:jbaysolutions/vue-grid-layout#6d3635f",
     "core-js": "^3.6.5",
     "mathjs": "^7.0.1",
     "register-service-worker": "^1.7.1",

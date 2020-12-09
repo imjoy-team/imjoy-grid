@@ -1,4 +1,4 @@
-export async function setupImJoyAPI({ createWindow }) {
+export async function setupImJoyAPI({ createWindow, updateConfig }) {
   const imjoyRPC = await window.imjoyLoader.loadImJoyRPC({
     api_version: "0.2.3"
   });
@@ -13,6 +13,11 @@ export async function setupImJoyAPI({ createWindow }) {
   const service_api = {
     setup() {
       api.log("ImJoyGrid loaded successfully.");
+    },
+    run(ctx) {
+      if (ctx.config) {
+        updateConfig(ctx.config);
+      }
     },
     createWindow
   };

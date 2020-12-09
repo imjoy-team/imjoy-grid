@@ -24,7 +24,7 @@ class ImJoyPlugin {
     async setup() {}
     async run(ctx) {
         const grid = await api.createWindow({src: "https://grid.imjoy.io/#/app"})
-        const viewer = grid.createWindow({src: "https://kaibu.org/#/app", name: "Kaibu"})
+        const viewer = await grid.createWindow({src: "https://kaibu.org/#/app", name: "Kaibu"})
         await viewer.view_image("https://images.proteinatlas.org/61448/1319_C10_2_blue_red_green.jpg")
     }
 }
@@ -51,7 +51,7 @@ class ImJoyPlugin():
 
     async def run(self, ctx):
         grid = await api.createWindow(src="https://grid.imjoy.io/#/app")
-        viewer = grid.createWindow(src="https://kaibu.org/#/app")
+        viewer = await grid.createWindow(src="https://kaibu.org/#/app")
         await viewer.view_image("https://images.proteinatlas.org/61448/1319_C10_2_blue_red_green.jpg")
 
 api.export(ImJoyPlugin())

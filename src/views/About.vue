@@ -10,7 +10,7 @@
           <h1 class="title">About ImJoy Grid</h1>
           <h2 class="subtitle">v{{ version }}</h2>
           <p>
-           A draggable, resizable grid container for ImJoy windows
+            A draggable, resizable grid container for ImJoy windows
           </p>
         </div>
       </div>

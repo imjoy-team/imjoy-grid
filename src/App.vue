@@ -4,4 +4,8 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.vue-resizable-handle {
+  z-index: 9999 !important;
+}
+</style>

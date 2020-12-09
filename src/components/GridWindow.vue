@@ -23,7 +23,7 @@
       :is-responsive="true"
       :is-draggable="true"
       :is-resizable="true"
-      :vertical-compact="true"
+      :vertical-compact="verticalCompact"
       :margin="[3, 3]"
       :use-css-transforms="true"
       ref="window_grid"
@@ -126,7 +126,8 @@ export default {
       windows: [],
       selected_workspace: "default",
       imjoy: null,
-      wm: null
+      wm: null,
+      verticalCompact: true
     };
   },
   created() {
@@ -224,8 +225,11 @@ export default {
   },
   methods: {
     updateConfig(config) {
-      this.colNum = config.colNum || this.colNum;
-      this.rowHeight = config.rowHeight || this.rowHeight;
+      if (config.colNum !== undefined) this.colNum = config.colNum;
+      if (config.rowHeight !== undefined) this.rowHeight = config.rowHeight;
+      if (config.verticalCompact !== undefined)
+        this.verticalCompact = config.verticalCompact;
+      this.$forceUpdate();
     },
     isStandaloneWindow(w) {
       return !w.dialog && (this.mode !== "grid" || w.standalone);

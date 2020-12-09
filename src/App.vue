@@ -5,7 +5,181 @@
 </template>
 
 <style>
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(0, 0, 0);
+  /* Disables pull-to-refresh but allows overscroll glow effects. */
+  overscroll-behavior-y: contain;
+  overscroll-behavior-x: none;
+  position: fixed;
+  overflow-wrap: break-word;
+}
+
+.md-app {
+  height: 100%;
+  margin: 0px;
+}
+
+.md-content {
+  padding: 0px;
+}
+
+.vm--modal {
+  max-height: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .md-content {
+    padding: 4px;
+  }
+}
+
+.md-list-item-content {
+  min-height: 48px;
+}
+
+@media screen and (max-height: 800px) and (pointer: fine) {
+  .md-list-item-content {
+    padding: 0px 10px !important;
+    min-height: 36px;
+  }
+  .md-list-item {
+    padding: 0px 0px !important;
+  }
+}
+
+.md-menu-content {
+  max-height: 60vh;
+}
+
+.md-app-content {
+  padding: 0px;
+}
+
+.md-list-item-content {
+  justify-content: flex-start !important;
+}
+
+.md-menu-content {
+  z-index: 9998;
+}
+
+.md-tooltip {
+  z-index: 9999;
+}
+
+.md-subheader {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.md-input {
+  font-size: 16px !important;
+}
+
+.table-head-checkbox {
+  margin-top: 5px;
+  width: 50px;
+}
+
 .vue-resizable-handle {
   z-index: 9999 !important;
+}
+/*
+.md-dialog{
+  overflow-y: auto !important;
+} */
+
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.md-dialog-container {
+  max-width: 100% !important;
+  overflow: auto;
+  -webkit-transform: translateZ(0);
+  overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 500px) {
+  .md-dialog-content {
+    padding: 8px !important;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .md-dialog-content {
+    margin-bottom: 5px !important;
+  }
+  .md-dialog-title {
+    margin-bottom: 5px !important;
+  }
+}
+
+.md-dialog-content {
+  margin-bottom: 20px;
+}
+
+.md-dialog-title {
+  margin-bottom: 20px;
+}
+
+.md-toolbar.md-dense {
+  min-height: 36px;
+}
+
+li.md-menu-item {
+  margin-top: 0px;
+}
+ol li,
+ul li {
+  margin-top: 0rem !important;
+}
+
+.joy-run-button .md-ripple {
+  justify-content: flex-start !important;
+  padding: 4px;
+}
+
+@media screen and (max-width: 600px) {
+  .joy-run-button .md-ripple {
+    padding: 0px !important;
+  }
+}
+
+/* for code editor */
+canvas.decorationsOverviewRuler {
+  background-color: white;
+}
+
+.hide-badge > .md-badge {
+  display: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 </style>

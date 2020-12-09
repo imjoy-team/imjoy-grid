@@ -1,6 +1,6 @@
 {
   "name": "imjoy-grid",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,7 +11,7 @@
     "format": "prettier --write \"{src,tests}/**/**\""
   },
   "dependencies": {
-    "imjoy-core": "^0.13.46",
+    "imjoy-core": "^0.13.47",
     "minibus": "^3.1.0",
     "vue-material": "^1.0.0-beta-12",
     "vue-grid-layout": "github:jbaysolutions/vue-grid-layout#6d3635f",

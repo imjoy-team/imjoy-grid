@@ -19,6 +19,7 @@ export async function setupImJoyAPI({ createWindow, updateConfig }) {
         updateConfig(ctx.config);
       }
     },
+    updateConfig,
     createWindow
   };
   api.export(service_api);

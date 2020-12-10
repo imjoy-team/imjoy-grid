@@ -1,6 +1,6 @@
 {
   "name": "imjoy-grid",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,6 +17,7 @@
     "vue-grid-layout": "github:jbaysolutions/vue-grid-layout#6d3635f",
     "core-js": "^3.6.5",
     "mathjs": "^7.0.1",
+    "sl-vue-tree": "^1.8.5",
     "register-service-worker": "^1.7.1",
     "resize-observer-polyfill": "^1.5.1",
     "vue": "^2.6.11",

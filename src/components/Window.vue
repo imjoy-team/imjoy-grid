@@ -304,19 +304,10 @@ export default {
     }
   },
   methods: {
-    setAPI() {
-      const comp = this.$refs["window-content"];
-      if (comp) {
-        this.w.api = this.w.api || {};
-        for (let k in Object.keys(comp)) {
-          if (
-            !k.startsWith("$") &&
-            !k.startsWith("_") &&
-            typeof comp[k] === "function"
-          ) {
-            this.w.api[k] = comp[k];
-          }
-        }
+    setAPI(exportedAPI) {
+      this.w.api = this.w.api || {};
+      for (let k of Object.keys(exportedAPI)) {
+        this.w.api[k] = exportedAPI[k];
       }
       this.w.api.emit("ready");
     },

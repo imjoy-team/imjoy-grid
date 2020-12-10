@@ -24,7 +24,7 @@
       :is-draggable="true"
       :is-resizable="true"
       :vertical-compact="verticalCompact"
-      :margin="[3, 3]"
+      :margin="[margin, margin]"
       :use-css-transforms="true"
       ref="window_grid"
     >
@@ -127,7 +127,8 @@ export default {
       selected_workspace: "default",
       imjoy: null,
       wm: null,
-      verticalCompact: true
+      verticalCompact: true,
+      margin: 3
     };
   },
   created() {
@@ -229,6 +230,7 @@ export default {
       if (config.rowHeight !== undefined) this.rowHeight = config.rowHeight;
       if (config.verticalCompact !== undefined)
         this.verticalCompact = config.verticalCompact;
+      if (config.margin !== undefined) this.margin = config.margin;
       this.$forceUpdate();
     },
     isStandaloneWindow(w) {

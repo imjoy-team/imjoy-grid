@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.2fde479cca795d4aa6c0f1ef67130858.js"
+  "/precache-manifest.8a3f3d183be44d7f6dc48793f05f05b0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "imjoy-grid"});

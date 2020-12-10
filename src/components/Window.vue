@@ -17,8 +17,8 @@
         md-direction="bottom-end"
         :md-active.sync="options_menu_open"
       >
-        <md-button class="md-icon-button" md-menu-trigger>
-          <md-icon>more_vert</md-icon>
+        <md-button class="md-icon-button md-primary md-raised" md-menu-trigger>
+          <md-icon>more_horiz</md-icon>
         </md-button>
 
         <md-menu-content>

@@ -122,7 +122,7 @@ export default {
   data() {
     return {
       rowHeight: 30,
-      column_width: 30,
+      columnWidth: 30,
       colNum: 20,
       active_windows: [],
       show_overlay: false,
@@ -193,8 +193,22 @@ export default {
           this.loading = false;
         });
     } else {
+      // standalone mode
       self.imjoy = new ImJoy({
         imjoy_api: {
+          createWindow(_plugin, config) {
+            if (config.src && config.src.startsWith("https://grid.imjoy.io")) {
+              self.updateConfig(config.config);
+              return {
+                _rintf: true,
+                createWindow(config) {
+                  return self.imjoy.pm.createWindow(_plugin, config);
+                },
+                updateConfig: self.updateConfig
+              };
+            }
+            return self.imjoy.pm.createWindow(_plugin, config);
+          },
           showDialog(_plugin, config) {
             return self.imjoy.pm.createWindow(_plugin, config);
           }
@@ -219,7 +233,7 @@ export default {
   mounted() {
     this.screenWidth = window.innerWidth;
     this.colNum = parseInt(
-      this.$refs.gridwindow.clientWidth / this.column_width
+      this.$refs.gridwindow.clientWidth / this.columnWidth
     );
     window.onbeforeunload = function(evt) {
       var message = "Are you sure you want to leave?";
@@ -335,9 +349,9 @@ export default {
     },
     updateSize(e) {
       this.screenWidth = e.width;
-      // this.column_width = parseInt(this.screenWidth/60)
+      // this.columnWidth = parseInt(this.screenWidth/60)
       this.colNum = parseInt(
-        this.$refs.gridwindow.clientWidth / this.column_width
+        this.$refs.gridwindow.clientWidth / this.columnWidth
       );
     },
     onWindowAdd(w) {
@@ -393,13 +407,13 @@ export default {
     fullScreen(w) {
       w.fullscreen = true;
       this.colNum = parseInt(
-        this.$refs.gridwindow.clientWidth / this.column_width
+        this.$refs.gridwindow.clientWidth / this.columnWidth
       );
       const fh = parseInt(
         (this.$refs.gridwindow.clientHeight - 76) / this.rowHeight
       );
       const fw =
-        parseInt(this.$refs.gridwindow.clientWidth / this.column_width) + 1;
+        parseInt(this.$refs.gridwindow.clientWidth / this.columnWidth) + 1;
       w._h = w.h;
       w._w = w.w;
       w.h = fh;
@@ -413,7 +427,7 @@ export default {
     },
     normalSize(w) {
       this.colNum = parseInt(
-        this.$refs.gridwindow.clientWidth / this.column_width
+        this.$refs.gridwindow.clientWidth / this.columnWidth
       );
       w.fullscreen = false;
       w.h = w._h || 5;

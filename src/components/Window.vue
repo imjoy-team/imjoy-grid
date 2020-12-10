@@ -1,8 +1,18 @@
 <template>
   <md-card v-if="w">
-    <div v-if="w.hide_title_bar">
+    <div
+      v-if="w.hide_title_bar && w.menu_button_location !== 'none'"
+      :class="{
+        'drag-handle': withDragHandle,
+        'floating-upper-left': w.menu_button_location === 'upper-left',
+        'floating-upper-right': w.menu_button_location === 'upper-right',
+        'floating-lower-left': w.menu_button_location === 'lower-left',
+        'floating-lower-right': w.menu_button_location === 'lower-right'
+      }"
+      style="height:20px;width:20px;"
+    >
       <md-menu
-        style="position:absolute; left:0"
+        class="floating-button"
         md-size="big"
         md-direction="bottom-end"
         :md-active.sync="options_menu_open"
@@ -35,10 +45,10 @@
             <md-icon>filter</md-icon>
             <span>Duplicate</span>
           </md-menu-item>
-          <md-menu-item @click="hide(w)">
+          <!-- <md-menu-item @click="hide(w)">
             <md-icon>remove</md-icon>
             <span>Hide</span>
-          </md-menu-item>
+          </md-menu-item> -->
           <md-menu-item @click="close(w)">
             <md-icon>close</md-icon>
             <span>Close</span>
@@ -74,10 +84,10 @@
           <md-icon>close</md-icon>
           <md-tooltip>Close window</md-tooltip>
         </md-button>
-        <md-button class="md-icon-button md-accent no-drag" @click="hide(w)">
+        <!-- <md-button class="md-icon-button md-accent no-drag" @click="hide(w)">
           <md-icon>remove</md-icon>
           <md-tooltip>Hide window</md-tooltip>
-        </md-button>
+        </md-button> -->
         <md-button
           v-if="!w.fullscreen"
           class="md-icon-button md-accent no-drag"
@@ -132,10 +142,10 @@
               <md-icon>filter</md-icon>
               <span>Duplicate</span>
             </md-menu-item>
-            <md-menu-item @click="hide(w)">
+            <!-- <md-menu-item @click="hide(w)">
               <md-icon>remove</md-icon>
               <span>Hide</span>
-            </md-menu-item>
+            </md-menu-item> -->
             <md-menu-item @click="close(w)">
               <md-icon>close</md-icon>
               <span>Close</span>
@@ -234,6 +244,7 @@ export default {
   },
   mounted() {
     if (this.w) {
+      this.w.menu_button_location = this.w.menu_button_location || "upper-left";
       this.w.$el = this.$el;
       this.w.api.on("refresh", () => {
         this.refresh();
@@ -350,6 +361,35 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.drag-handle > .floating-button {
+  width: 20px;
+  height: 20px;
+  display: none;
+}
+.drag-handle:hover > .floating-button {
+  display: inline-block !important;
+}
+
+.floating-upper-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.floating-upper-right {
+  position: absolute;
+  right: 6px;
+  top: 0;
+}
+.floating-lower-left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.floating-lower-right {
+  position: absolute;
+  right: 6px;
+  bottom: 0;
+}
 .whiteboard {
   height: calc(100% - 8px);
   position: relative;

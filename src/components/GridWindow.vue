@@ -5,6 +5,12 @@
     @mouseup="show_overlay = false"
     @click="unselectWindows($event)"
   >
+    <div class="lds-ellipsis" v-show="loading">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div
       @mousemove="overlayMousemove"
       class="overlay"
@@ -128,7 +134,8 @@ export default {
       imjoy: null,
       wm: null,
       verticalCompact: true,
-      margin: 3
+      margin: 3,
+      loading: false
     };
   },
   created() {
@@ -181,7 +188,13 @@ export default {
         });
       });
     } else {
-      self.imjoy = new ImJoy({ imjoy_api: {} });
+      self.imjoy = new ImJoy({
+        imjoy_api: {
+          showDialog(_plugin, config) {
+            return self.imjoy.pm.createWindow(_plugin, config);
+          }
+        }
+      });
       self.imjoy.start().then(async () => {
         this.wm = self.imjoy.wm;
         this.windows = this.wm && this.wm.windows;
@@ -238,18 +251,24 @@ export default {
         );
         if (!p) return;
       }
+      this.loading = true;
       this.imjoy.pm
         .reloadPluginRecursively({
           uri: p
         })
         .then(async plugin => {
-          if (plugin.api.run) {
-            await plugin.api.run({ config: {}, data: {} });
+          this.loading = true;
+          try {
+            if (plugin.api.run) {
+              await plugin.api.run({ config: {}, data: {} });
+            }
+            this.imjoy.pm.imjoy_api.showMessage(
+              null,
+              `Plugin ${plugin.name} successfully loaded, you can now run it from the ImJoy plugin menu.`
+            );
+          } finally {
+            this.loading = false;
           }
-          this.imjoy.pm.imjoy_api.showMessage(
-            null,
-            `Plugin ${plugin.name} successfully loaded, you can now run it from the ImJoy plugin menu.`
-          );
         })
         .catch(e => {
           console.error(e);
@@ -550,5 +569,76 @@ export default {
   position: fixed;
   right: 0;
   top: 0;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: calc(50% + 20px);
+  left: 50%;
+  z-index: 9999;
+  transform: translate(-50%, 0);
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #448aff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(24px, 0);
+  }
 }
 </style>

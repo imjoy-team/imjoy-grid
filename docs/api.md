@@ -81,7 +81,7 @@ You can set the `menu_button_location` to `upper-left`, `upper-right`, `lower-le
 
 The following examples shows how to display a file tree and a [vizarr](https://github.com/hms-dbmi/vizarr) viewer. Double click on the file and the corresponding file will be added to the viewer as a new layer.
 
-<!-- ImJoyPlugin: {"type": "native-python", "editor_height": "400px"} -->
+<!-- ImJoyPlugin: {"type": "native-python", "hide_code_block": true} -->
 ```python
 from imjoy import api
 

@@ -142,51 +142,56 @@ export default {
     const self = this;
     // inside an iframe
     if (window.self !== window.top) {
+      this.loading = true;
       setupImJoyAPI({
         createWindow(config) {
           return self.imjoy.pm.createWindow(null, config);
         },
         updateConfig: this.updateConfig
-      }).then(imjoy_api => {
-        const wrapped_imjoy_api = {};
-        for (let k of Object.keys(imjoy_api)) {
-          if (["export", "registerCodec", "dispose"].includes(k)) continue;
-          if (typeof imjoy_api[k] === "function")
-            wrapped_imjoy_api[k] = function() {
-              // remove the first argument which is the plugin
-              return imjoy_api[k].apply(
-                this,
-                Array.prototype.slice(arguments).slice(1)
-              );
-            };
-          else if (typeof imjoy_api[k] === "object") {
-            wrapped_imjoy_api[k] = {};
-            for (let u of Object.keys(imjoy_api[k])) {
-              if (typeof imjoy_api[k][u] === "function")
-                wrapped_imjoy_api[k][u] = function() {
-                  // remove the first argument which is the plugin
-                  return imjoy_api[k][u].apply(
-                    this,
-                    Array.prototype.slice(arguments).slice(1)
-                  );
-                };
-              else wrapped_imjoy_api[k][u] = imjoy_api[k][u];
-            }
-          } else wrapped_imjoy_api[k] = imjoy_api[k];
-        }
-        wrapped_imjoy_api._rintf = true;
-        self.imjoy = new ImJoy({ imjoy_api: wrapped_imjoy_api });
+      })
+        .then(imjoy_api => {
+          const wrapped_imjoy_api = {};
+          for (let k of Object.keys(imjoy_api)) {
+            if (["export", "registerCodec", "dispose"].includes(k)) continue;
+            if (typeof imjoy_api[k] === "function")
+              wrapped_imjoy_api[k] = function() {
+                // remove the first argument which is the plugin
+                return imjoy_api[k].apply(
+                  this,
+                  Array.prototype.slice(arguments).slice(1)
+                );
+              };
+            else if (typeof imjoy_api[k] === "object") {
+              wrapped_imjoy_api[k] = {};
+              for (let u of Object.keys(imjoy_api[k])) {
+                if (typeof imjoy_api[k][u] === "function")
+                  wrapped_imjoy_api[k][u] = function() {
+                    // remove the first argument which is the plugin
+                    return imjoy_api[k][u].apply(
+                      this,
+                      Array.prototype.slice(arguments).slice(1)
+                    );
+                  };
+                else wrapped_imjoy_api[k][u] = imjoy_api[k][u];
+              }
+            } else wrapped_imjoy_api[k] = imjoy_api[k];
+          }
+          wrapped_imjoy_api._rintf = true;
+          self.imjoy = new ImJoy({ imjoy_api: wrapped_imjoy_api });
 
-        self.imjoy.start().then(() => {
-          this.wm = self.imjoy.wm;
-          this.windows = this.wm && this.wm.windows;
-          assert(this.windows);
-          this.event_bus = this.wm.event_bus;
-          this.event_bus.on("add_window", this.onWindowAdd);
-          this.event_bus.on("close_window", this.onWindowClose);
-          this.event_bus.on("resize", this.updateSize);
+          self.imjoy.start().then(() => {
+            this.wm = self.imjoy.wm;
+            this.windows = this.wm && this.wm.windows;
+            assert(this.windows);
+            this.event_bus = this.wm.event_bus;
+            this.event_bus.on("add_window", this.onWindowAdd);
+            this.event_bus.on("close_window", this.onWindowClose);
+            this.event_bus.on("resize", this.updateSize);
+          });
+        })
+        .finally(() => {
+          this.loading = false;
         });
-      });
     } else {
       self.imjoy = new ImJoy({
         imjoy_api: {

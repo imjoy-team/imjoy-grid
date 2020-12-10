@@ -91,12 +91,12 @@ class ImJoyPlugin():
     
     async def add_image_viewer(self, grid):
         # create a window
-        viewer = await grid.createWindow(src="https://hms-dbmi.github.io/vizarr", w=7,h=4, x=3, y=0, hide_title_bar=True, menu_button_location="upper-right")
+        self.viewer = await grid.createWindow(src="https://hms-dbmi.github.io/vizarr", w=7,h=4, x=3, y=0, hide_title_bar=True, menu_button_location="upper-right")
 
         async def on_image_click(info):
             api.alert(info)
 
-        viewer.add_image({"source": "https://s3.embassy.ebi.ac.uk/idr/zarr/v0.1/4495402.zarr", "name": "idr0053"})
+        self.viewer.add_image({"source": "https://s3.embassy.ebi.ac.uk/idr/zarr/v0.1/4495402.zarr", "name": "idr0053"})
     
     async def add_file_tree(self, grid):
         # images are from OME: https://blog.openmicroscopy.org/file-formats/community/2020/11/04/zarr-data/
@@ -109,7 +109,7 @@ class ImJoyPlugin():
             "idr0077": "https://s3.embassy.ebi.ac.uk/idr/zarr/v0.1/9836839.zarr"
         }
         async def node_dbclick_callback(node):
-            viewer.add_image({"source": sources[node['title']], "name": node['title']})
+            self.viewer.add_image({"source": sources[node['title']], "name": node['title']})
 
         await grid.createWindow(type="imjoy/tree", w=3, x=0, y=0, h=2, hide_title_bar=True, config={
             "_rintf": True,

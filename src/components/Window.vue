@@ -37,10 +37,10 @@
             <md-icon>fullscreen</md-icon>
             <span>Fullscreen</span>
           </md-menu-item>
-          <md-menu-item @click="detach(w)" v-if="!w.standalone">
+          <!-- <md-menu-item @click="detach(w)" v-if="!w.standalone">
             <md-icon>launch</md-icon>
             <span>Detach</span>
-          </md-menu-item>
+          </md-menu-item> -->
           <md-menu-item @click="duplicate(w)">
             <md-icon>filter</md-icon>
             <span>Duplicate</span>
@@ -134,10 +134,10 @@
               <md-icon>fullscreen</md-icon>
               <span>Fullscreen</span>
             </md-menu-item>
-            <md-menu-item @click="detach(w)" v-if="!w.standalone">
+            <!-- <md-menu-item @click="detach(w)" v-if="!w.standalone">
               <md-icon>launch</md-icon>
               <span>Detach</span>
-            </md-menu-item>
+            </md-menu-item> -->
             <md-menu-item @click="duplicate(w)">
               <md-icon>filter</md-icon>
               <span>Duplicate</span>

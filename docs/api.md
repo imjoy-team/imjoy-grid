@@ -72,6 +72,8 @@ When creating windows inside the ImJoy Grid container (via `grid.createWindow`, 
 
 You can also set `hide_title_bar` to `true` if you don't want to show the title bar.
 
+You can set the `menu_button_location` to `upper-left`, `upper-right`, `lower-left`,`lower-right`, or set to `none` to hide it completely.
+
 !> If you want to use predefined `x`, `y` position, you may want to set `verticalCompact` to `false`.
 
 
@@ -89,7 +91,7 @@ class ImJoyPlugin():
     
     async def add_image_viewer(self, grid):
         # create a window
-        viewer = await grid.createWindow(src="https://hms-dbmi.github.io/vizarr", w=7,h=4, x=3, y=0, hide_title_bar=True)
+        viewer = await grid.createWindow(src="https://hms-dbmi.github.io/vizarr", w=7,h=4, x=3, y=0, hide_title_bar=True, menu_button_location="upper-right")
 
         async def on_image_click(info):
             api.alert(info)

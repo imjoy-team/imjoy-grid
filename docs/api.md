@@ -167,7 +167,7 @@ class ImJoyPlugin():
 
     async def run(self, ctx):
         # create a grid container
-        grid = await api.createWindow(src="http://localhost:8080/#/app", config={"verticalCompact": False, "colNum": 10, "rowHeight": 120})
+        grid = await api.showDialog(src="https://grid.imjoy.io/#/app", config={"verticalCompact": False, "colNum": 10, "rowHeight": 120})
         await self.add_image_viewer(grid)
         await self.add_file_tree(grid)
         await self.add_schema_form(grid)

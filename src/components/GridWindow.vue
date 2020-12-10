@@ -182,7 +182,7 @@ export default {
       });
     } else {
       self.imjoy = new ImJoy({ imjoy_api: {} });
-      self.imjoy.start().then(() => {
+      self.imjoy.start().then(async () => {
         this.wm = self.imjoy.wm;
         this.windows = this.wm && this.wm.windows;
         assert(this.windows);
@@ -190,6 +190,11 @@ export default {
         this.event_bus.on("add_window", this.onWindowAdd);
         this.event_bus.on("close_window", this.onWindowClose);
         this.event_bus.on("resize", this.updateSize);
+        await self.imjoy.pm.reloadPluginRecursively({
+          uri:
+            "https://imjoy-team.github.io/jupyter-engine-manager/Jupyter-Engine-Manager.imjoy.html"
+        });
+        this.loadPluginByQuery();
       });
     }
   },
@@ -225,6 +230,41 @@ export default {
     }
   },
   methods: {
+    loadPlugin(p) {
+      if (!p) {
+        p = prompt(
+          `Please type a ImJoy plugin URL`,
+          "https://github.com/imjoy-team/imjoy-plugins/blob/master/repository/ImageAnnotator.imjoy.html"
+        );
+        if (!p) return;
+      }
+      this.imjoy.pm
+        .reloadPluginRecursively({
+          uri: p
+        })
+        .then(async plugin => {
+          if (plugin.api.run) {
+            await plugin.api.run({ config: {}, data: {} });
+          }
+          this.imjoy.pm.imjoy_api.showMessage(
+            null,
+            `Plugin ${plugin.name} successfully loaded, you can now run it from the ImJoy plugin menu.`
+          );
+        })
+        .catch(e => {
+          console.error(e);
+          this.imjoy.pm.imjoy_api.showMessage(
+            null,
+            `Failed to load the plugin, error: ${e}`
+          );
+        });
+    },
+    loadPluginByQuery() {
+      if (this.$route.query.plugin || this.$route.query.p) {
+        const p = this.$route.query.plugin || this.$route.query.p;
+        this.loadPlugin(p);
+      }
+    },
     updateConfig(config) {
       if (config.colNum !== undefined) this.colNum = config.colNum;
       if (config.rowHeight !== undefined) this.rowHeight = config.rowHeight;

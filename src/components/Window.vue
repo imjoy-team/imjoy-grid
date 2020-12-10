@@ -1,6 +1,6 @@
 <template>
   <md-card v-if="w">
-    <div class="no-drag" v-if="w.hide_title_bar">
+    <div v-if="w.hide_title_bar">
       <md-menu
         style="position:absolute; left:0"
         md-size="big"

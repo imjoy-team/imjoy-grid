@@ -26,7 +26,7 @@
     const logo = 'https://imjoy.io/static/img/imjoy-logo-black.svg' // a logo show on the upper-left corner
     //--------------------------End------------------------------------
     const repo = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}`;
-    const basePath = window.location.pathname === '/' ? '/' : '/' + GITHUB_REPO;
+    const basePath = window.location.pathname;
     document.title = `${GITHUB_USER}|${name}`;
     window.$docsify = window.$docsify || {
       name,

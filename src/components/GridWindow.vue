@@ -157,7 +157,7 @@ export default {
               wrapped_imjoy_api[k] = function() {
                 // remove the first argument which is the plugin
                 return imjoy_api[k].apply(
-                  this,
+                  imjoy_api,
                   Array.prototype.slice.call(arguments).slice(1)
                 );
               };
@@ -168,7 +168,7 @@ export default {
                   wrapped_imjoy_api[k][u] = function() {
                     // remove the first argument which is the plugin
                     return imjoy_api[k][u].apply(
-                      this,
+                      imjoy_api,
                       Array.prototype.slice.call(arguments).slice(1)
                     );
                   };

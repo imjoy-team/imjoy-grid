@@ -21,7 +21,7 @@
       v-if="wm && gridWindows"
       :layout.sync="gridWindows"
       v-show="!wm.selected_window && gridWindows.length > 0"
-      style="min-height:100%"
+      style="min-height:100%;touch-action: none;"
       :col-num.sync="colNum"
       :is-mirrored="false"
       :auto-size="true"

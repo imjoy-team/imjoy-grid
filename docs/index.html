@@ -24,9 +24,10 @@
     const homepage = 'https://raw.githubusercontent.com/imjoy-team/kaibu/master/README.md' // the home page markdown file (relative path to the current folder)
     const name = 'ImJoy Grid' // name of this documentation
     const logo = 'https://imjoy.io/static/img/imjoy-logo-black.svg' // a logo show on the upper-left corner
+    const isCustomDomain = true // set to true if you are using a custom domain
     //--------------------------End------------------------------------
     const repo = `https://github.com/${githubUser}/${githubRepo}`;
-    const basePath = window.location.pathname.replace('/'+githubRepo, '/')
+    const basePath = isCustomDomain? window.location.pathname : window.location.pathname.replace('/'+githubRepo, '/').replace('//', '/')
     document.title = `${githubUser}|${name}`;
     window.$docsify = window.$docsify || {
       name,

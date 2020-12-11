@@ -158,7 +158,7 @@ export default {
                 // remove the first argument which is the plugin
                 return imjoy_api[k].apply(
                   this,
-                  Array.prototype.slice(arguments).slice(1)
+                  Array.prototype.slice.call(arguments).slice(1)
                 );
               };
             else if (typeof imjoy_api[k] === "object") {
@@ -169,7 +169,7 @@ export default {
                     // remove the first argument which is the plugin
                     return imjoy_api[k][u].apply(
                       this,
-                      Array.prototype.slice(arguments).slice(1)
+                      Array.prototype.slice.call(arguments).slice(1)
                     );
                   };
                 else wrapped_imjoy_api[k][u] = imjoy_api[k][u];

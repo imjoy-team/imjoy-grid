@@ -59,7 +59,7 @@ api.export(ImJoyPlugin())
 <!-- tabs:end -->
 
 
-### Configurations
+## Configurations
 When creating a new ImJoy Grid via `api.createWindow` or `api.showDialog`, a `config` object can be passed which may contain the following config keys:
  * `colNum`: Number, default: 20, the number of columns
  * `rowHeight`: Number, default: 30, the height of the rows
@@ -77,7 +77,7 @@ You can set the `menu_button_location` to `upper-left`, `upper-right`, `lower-le
 !> If you want to use predefined `x`, `y` position, you may want to set `verticalCompact` to `false`.
 
 
-### Example: Combining tree window with vizarr
+## Example: Combining tree window with vizarr
 
 The following examples shows how to display a file tree and a [vizarr](https://github.com/hms-dbmi/vizarr) viewer. Double click on the file and the corresponding file will be added to the viewer as a new layer.
 
